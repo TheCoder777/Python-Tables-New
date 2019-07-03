@@ -39,7 +39,7 @@ class row():
     def insert(self, pos, val):
         pos = int(pos) # make sure it is an int
 
-        if pos > len(self.root): # if the position is actually in the row
+        if pos > len(self.root): # check if the position is actually in the row
             print("ERROR:\nNo position '{}' in this row!".format(pos))
             return False
         else:
@@ -51,8 +51,15 @@ class row():
             self.root[i] = val
         return True
 
-    def get(self):
-        return self.root
+    def get(self, item=False):
+        if item != False or item == 0: # if position is 0
+            item = int(item) # make sure it is an int
+            if item > len(self.root): # check if the position is actually in the row
+                print("ERROR:\nNo position '{}' in this row!".format(pos))
+            else:
+                return self.root[item]
+        else:
+            return self.root
 
     def get_str(self):
         self.root_str = ""
@@ -80,6 +87,11 @@ class Table():
     def __repr__(self):
         return str(self.show("get_str"))
 
+    def __convert_to_list(self):
+        self.root_list = [] # create list to return
+        for row in self.root:
+            self.root_list.append(row.get()) # get each element and append it to list
+        return self.root_list
 
     def build(self):
         self.root = [row(len=self.rows, val=self.val) for col in range(self.columns)] # create main table
@@ -96,16 +108,42 @@ class Table():
             return self.root_str
 
         else: # default
-            print("This method is not valid!")
+            print("The method '{}' is not valid!".format(method))
 
-    def get(self, row=False):
-        if row and isinstance(row, int):
-            return self.root[row].get() # row is then a number
+    def get(self, row=False, column=False, items=False):
+        if row:
+            if isinstance(row, (list, tuple)): # if multiple rows are given
+                self.get_rows = []
+                for i in row:
+                    self.get_rows.append(self.root[i].get())
+                return self.get_rows
+            elif isinstance(row, int): # for singe row
+                return self.root[row].get()
+        elif column:
+            self.get_columns = []
+            if isinstance(column, (list, tuple)): # if multiple columns are given
+                for i in column:
+                    for row in self.root:
+                        self.get_columns.append(row.get(i))
+                    return self.get_columns
+            elif isinstance(column, int): # for singe column
+                for row in self.root:
+                    self.get_columns.append(row.get(column))
+                return self.get_columns
+        elif items:
+            if isinstance(items[0], int) and isinstance(items[1], int): # if only one items is given
+                return self.root[items[0]].get(item=items[1]) # items is still a list, but with two integers, and no lists inside
+            elif isinstance(items, (list, tuple)): # if multiple items are given
+                self.get_items = []
+                for item in items:
+                    if isinstance(item, (list, tuple)):
+                        self.get_items.append(self.root[item[0]].get(item[1]))
+                    else:
+                        print("The postition of an item must be provided in a tuple or in a list.\nOne item has to be in a list as two inters.")
+                return self.get_items
 
-        self.root_list = [] # create list to return
-        for r in self.root:
-            self.root_list.append(r.get()) # get each element and append it to list
-        return self.root_list
+        else: # return entire table
+            return self.__convert_to_list() # converts the entire table to one list and returns the list
 
     def fill_row(self, row, val): # if multiple rows are given
         if isinstance(row, (list, tuple)):
@@ -123,16 +161,16 @@ class Table():
             for row in self.root:
                 row.insert(col, val)
 
-    def insert(self, row=False, col=False, items=False, val=False):
+    def insert(self, row=False, col=False, val=False, items=False, ):
         if items != False and row == False and col == False:
             if isinstance(items, (list, tuple)):
                 for i in items:
                     if isinstance(i, (list, tuple)):
                         self.root[i[0]].insert(i[1], val)
                     else:
-                        print("The postition of an item must be provided in a tuple or a list.")
+                        print("The postition of an item must be provided in a tuple or in a list.")
             else:
-                print("Multiple items must be provided in a tuple or a list.")
+                print("Multiple items must be provided in a tuple or in a list.")
 
         else:
             self.root[row].insert(col, val)
