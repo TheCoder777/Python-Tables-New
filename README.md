@@ -33,6 +33,20 @@ For example a structure like this:
     └── some_file.py
 ```
 
+Goes to something like this:
+```bash
+.
+├── downloads
+│   └── Python-Tables-New
+│       ├── LICENSE
+│       └── tables.py
+└── my_project
+    ├── main_file.py
+    ├── some_file.py
+    └── tables.py
+```
+
+
 Now you can import the module in your main_file.py:
 
 ```python
@@ -148,7 +162,7 @@ your_table.fill_column([2,3,4], "Hi") # fill columns 2, 3, 4
 
 
 
-#### Insert value at specific `position`:
+#### Insert value(s) at specific position:
 
 To set a value to one specific item in your table, you can use the 'insert()' function:
 
@@ -172,4 +186,26 @@ your_table.insert(items=((1,3), (2,4)), val="Hello!") # tuples in tuple
 
 ```
 
-Note that if you use the items list, you also have to use the 'val' variable to set the value.
+Note that if you use the items list, you should use the 'val' variable to set the value.
+
+
+
+### Getting items
+
+#### Get entire table
+
+To get the entire table as a data structure, you can just call the 'get()' function:
+
+```python
+data = your_table.get()
+```
+
+'data' should look something like this, if you print it:
+
+```python
+>>> print(data)
+[['Hello', 'Hello', 'Hello', 'Hello'],
+['Hello', 'Hello', 'Hello', 'Hello'],
+['Hello', 'Hello', 'Hello', 'Hello']]
+```
+
