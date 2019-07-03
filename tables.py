@@ -62,7 +62,7 @@ class row():
 
 ## Table object
 class Table():
-    def __init__(self, colums, val=default_val):
+    def __init__(self, colums):
         self.row = row() # crate instance of row object
 
         self.colums = int(colums)
