@@ -23,7 +23,7 @@
 ## default values
 default_len     = 4
 default_high    = 8
-default_val     = "Hallo"
+default_val     = "Empty"
 
 ## row object
 class row():
@@ -39,12 +39,20 @@ class row():
     def insert(self, pos, val):
         pos = int(pos) # make sure it is an int
 
-        if len(self.root) > pos: # if the position is actually in the row
+        if pos > len(self.root): # if the position is actually in the row
             print("ERROR:\nNo position '{}' in this row!".format(pos))
             return False
         else:
             self.root[pos] = val
             return True
+
+    def fill(self, val):
+        for i in range(len(self.root)):
+            self.root[i] = val
+        return True
+
+    def get(self):
+        return self.root
 
     def get_str(self):
         self.root_str = ""
@@ -52,20 +60,17 @@ class row():
             self.root_str+=item+"; "
         return self.root_str
 
-    def get(self):
-        return self.root
 
-    def fill(self, val):
-        for i in range(len(self.root)):
-            self.root[i] = val
-        return True
 
 ## Table object
 class Table():
-    def __init__(self, colums):
-        self.row = row() # crate instance of row object
+    def __init__(self, columns=default_high, rows=default_len, val=default_val):
+        # self.row = row(len=rows, val=val) # crate instance of row object#
+        ## this would link all instances together and changes all rows at once every time!
 
-        self.colums = int(colums)
+        self.rows=rows
+        self.val = val
+        self.columns = int(columns)
 
         self.build() # finish init with build
 
@@ -77,7 +82,7 @@ class Table():
 
 
     def build(self):
-        self.root = [self.row for col in range(self.colums)] # create main table
+        self.root = [row(len=self.rows, val=self.val) for col in range(self.columns)] # create main table
 
     def show(self, method="default"):
         if method == "default":
@@ -101,3 +106,33 @@ class Table():
         for r in self.root:
             self.root_list.append(r.get()) # get each element and append it to list
         return self.root_list
+
+    def fill_row(self, row, val): # if multiple rows are given
+        if isinstance(row, (list, tuple)):
+            for r in row:
+                self.root[r].fill(val)
+        else: # for singe row
+            self.root[row].fill(val)
+
+    def fill_column(self, col, val):
+        if isinstance(col, (list, tuple)): # if multiple columns are given
+            for c in col:
+                for row in self.root:
+                    row.insert(c, val)
+        else: #  for singel column
+            for row in self.root:
+                row.insert(col, val)
+
+    def insert(self, row=False, col=False, items=False, val=False):
+        if items != False and row == False and col == False:
+            if isinstance(items, (list, tuple)):
+                for i in items:
+                    if isinstance(i, (list, tuple)):
+                        self.root[i[0]].insert(i[1], val)
+                    else:
+                        print("The postition of an item must be provided in a tuple or a list.")
+            else:
+                print("Multiple items must be provided in a tuple or a list.")
+
+        else:
+            self.root[row].insert(col, val)
