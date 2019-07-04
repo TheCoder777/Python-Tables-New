@@ -27,7 +27,7 @@ default_val     = "Empty"
 
 ## row object
 class row():
-    def __init__(self, len=default_len, val=default_val):
+    def __init__(self, len=default_high, val=default_val):
         self.len = len
         self.default_val = val
         self.build()
@@ -51,9 +51,8 @@ class row():
             self.root[i] = val
         return True
 
-    def get(self, item=False):
-        if item != False or item == 0: # if position is 0
-            item = int(item) # make sure it is an int
+    def get(self, item=None):
+        if item != None:
             if item > len(self.root): # check if the position is actually in the row
                 print("ERROR:\nNo position '{}' in this row!".format(pos))
             else:
@@ -71,7 +70,7 @@ class row():
 
 ## Table object
 class Table():
-    def __init__(self, columns=default_high, rows=default_len, val=default_val):
+    def __init__(self, columns=default_len, rows=default_high, val=default_val):
         # self.row = row(len=rows, val=val) # crate instance of row object#
         ## this would link all instances together and changes all rows at once every time!
 
@@ -96,6 +95,10 @@ class Table():
     def build(self):
         self.root = [row(len=self.rows, val=self.val) for col in range(self.columns)] # create main table
 
+    def update(self):
+        self.rows = len(self.root)
+        self.columns = len(self.root[0].get() -1)
+
     def show(self, method="default"):
         if method == "default":
             for r in self.root: # r for row
@@ -110,8 +113,8 @@ class Table():
         else: # default
             print("The method '{}' is not valid!".format(method))
 
-    def get(self, row=False, column=False, items=False):
-        if row != False or row == 0:
+    def get(self, row=None, column=None, items=None):
+        if row != None:
             if isinstance(row, (list, tuple)): # if multiple rows are given
                 self.get_rows = []
                 for i in row:
@@ -119,7 +122,7 @@ class Table():
                 return self.get_rows
             elif isinstance(row, int): # for singe row
                 return self.root[row].get()
-        elif column != False or column == 0:
+        elif column != None:
             self.get_columns = []
             if isinstance(column, (list, tuple)): # if multiple columns are given
                 for i in column:
@@ -130,7 +133,7 @@ class Table():
                 for row in self.root:
                     self.get_columns.append(row.get(column))
                 return self.get_columns
-        elif items != False or items == 0:
+        elif items != None:
             if isinstance(items[0], int) and isinstance(items[1], int): # if only one items is given
                 return self.root[items[0]].get(item=items[1]) # items is still a list, but with two integers, and no lists inside
             elif isinstance(items, (list, tuple)): # if multiple items are given
