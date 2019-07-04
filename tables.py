@@ -63,7 +63,7 @@ class row():
     def get_str(self):
         self.root_str = ""
         for item in self.root:
-            self.root_str+=item+"; "
+            self.root_str+=str(item)+"; "
         return self.root_str
 
 
@@ -106,8 +106,8 @@ class Table():
 
         elif method == "get_str": # get the list returned as string
             self.root_str = ""
-            for i in self.root:
-                self.root_str += i.get_str()+"|\n"
+            for r in self.root:
+                self.root_str += r.get_str()+"|\n"
             return self.root_str
 
         else: # default
