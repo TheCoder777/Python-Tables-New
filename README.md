@@ -66,9 +66,30 @@ If the installation part was successful and you got no errors on import, you are
 
 
 
+### Reading and counting
+
+Note that in the whole module, you first start with the rows and continue with the rows!
+
+For example:
+
+```python
+		[[	'item', 'item', 'item',  'item'	], # row 0
+		[	'item', 'item', 'HELLO', 'item'	], # row 1
+		[	'item', 'item', 'item',  'item'	]] # row 2
+# column	0		1		 2		 3
+```
+
+So for example the item 'HELLO' is at the first row and at the second column.
+
+You start counting from the top to bottom, and then from left to right.
+
+Later in the functions, you always give the row as first, and the column as second parameter!
+
+
+
 ### Create a Table
 
-To create a table, you need to call the '.Table()' function.
+To create a table, you need to call the 'Table()' function.
 
 ```python
 import tables
@@ -174,7 +195,7 @@ Of course you can insert a value to different items at once.
 
 The only tricky thing is how you provide the positions right!
 
-You have to put the positions, for example 1, 3 and 2,4, in tuples or lists and then put it in a list or in a tuple:
+You have to put the positions, for example 1,3 and 2,4 in tuples or lists and then put it in a list or in a tuple:
 
 ```python
 your_table.insert(items=[[1,3], [2,4]], val="Hello!") # lists in list
@@ -209,13 +230,15 @@ data = your_table.get()
 ['Hello', 'Hello', 'Hello', 'Hello']]
 ```
 
+
+
 #### Get a specific row or column
 
 To get a specific row/column, you need to give the 'get()' function the 'row'/'column' argument:
 
 ```python
-third_row = your_table.get(row=2) # returns the third row
-second_column = your_table.get(column=1) # returns the second column
+third_row = your_table.get(row=2) # returns the second row
+second_column = your_table.get(column=1) # returns the first column
 ```
 
 You can also do this with multiple rows and columns:
@@ -225,12 +248,14 @@ rows = your_table.get(row=(2,3)) # row 2,3
 columns = your_table.get(column=[1,3]) # column 1,3
 ```
 
+
+
 #### Get specific item(s)
 
 If you need to get a specific item from an exact position, you need the 'items' parameter:
 
 ```python
-item = your_table.get(items=(1,2)) # item from second column and third row
+item = your_table.get(items=(1,2)) # item from first row and second column
 ```
 
 For multiple items, you need to use tuple in list again (or similar):
