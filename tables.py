@@ -74,7 +74,7 @@ class Table():
         # self.row = row(len=rows, val=val) # crate instance of row object#
         ## this would link all instances together and changes all rows at once every time!
 
-        self.rows=rows
+        self.rows = int(rows)
         self.val = val
         self.columns = int(columns)
 
@@ -93,11 +93,11 @@ class Table():
         return self.root_list
 
     def build(self):
-        self.root = [row(len=self.rows, val=self.val) for col in range(self.columns)] # create main table
+        self.root = [row(len=self.columns, val=self.val) for r in range(self.rows)] # create main table
 
     def update(self):
         self.rows = len(self.root)
-        self.columns = len(self.root[0].get() -1)
+        self.columns = len(self.root[0].get())
 
     def show(self, method="default"):
         if method == "default":
@@ -164,8 +164,8 @@ class Table():
             for row in self.root:
                 row.insert(col, val)
 
-    def insert(self, row=False, col=False, val=False, items=False, ):
-        if items != False and row == False and col == False:
+    def insert(self, row=None, col=None, val=None, items=None):
+        if items != None and row == None and col == None:
             if isinstance(items, (list, tuple)):
                 for i in items:
                     if isinstance(i, (list, tuple)):
@@ -174,6 +174,44 @@ class Table():
                         print("The postition of an item must be provided in a tuple or in a list.")
             else:
                 print("Multiple items must be provided in a tuple or in a list.")
-
         else:
             self.root[row].insert(col, val)
+
+    def add_row(self, pos=None, side=None, val=default_val, num=1): # num stands for how many rows
+                ## add individual length to each row?
+        if pos != None:
+            print("pos")
+            if pos > self.rows:
+                print("Postion: '{}' is not in the table".format(pos))
+            else:
+                if side != None:
+                    if side in ["Top", "top", "T", "t"]:
+                        for i in range(num):
+                            self.root.insert(pos, row(len=self.columns, val=val))
+                        self.update()
+                    elif side in ["Bottom", "bottom", "B", "b"]:
+                        for i in range(num):
+                            self.root.insert(pos + 1, row(len=self.columns, val=val))
+                        self.update()
+                else:
+                    for i in range(num):
+                        self.root.insert(pos, row(len=self.columns, val=val))
+                    self.update()
+        elif side != None:
+            print("side")
+            if side in ["Top", "top", "T", "t"]:
+                print("top")
+                for i in range(num):
+                    self.root.insert(0, row(len=self.columns, val=val))
+                self.update()
+            elif side in ["Bottom", "bottom", "B", "b"]:
+                print("bottom")
+                for i in range(num):
+                    self.root.append(row(len=self.columns, val=val))
+                self.update()
+            else:
+                print("Specified side is not available!")
+        else:
+            for i in range(num):
+                self.root.append(row(len=self.columns, val=val))
+            self.update()
