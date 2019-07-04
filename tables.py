@@ -87,7 +87,7 @@ class Table():
     def __repr__(self):
         return str(self.show("get_str"))
 
-    def __convert_to_list(self):
+    def __convert_to_list(self): # convert table to list format
         self.root_list = [] # create list to return
         for row in self.root:
             self.root_list.append(row.get()) # get each element and append it to list
@@ -111,7 +111,7 @@ class Table():
             print("The method '{}' is not valid!".format(method))
 
     def get(self, row=False, column=False, items=False):
-        if row:
+        if row != False or row == 0:
             if isinstance(row, (list, tuple)): # if multiple rows are given
                 self.get_rows = []
                 for i in row:
@@ -119,7 +119,7 @@ class Table():
                 return self.get_rows
             elif isinstance(row, int): # for singe row
                 return self.root[row].get()
-        elif column:
+        elif column != False or column == 0:
             self.get_columns = []
             if isinstance(column, (list, tuple)): # if multiple columns are given
                 for i in column:
@@ -130,7 +130,7 @@ class Table():
                 for row in self.root:
                     self.get_columns.append(row.get(column))
                 return self.get_columns
-        elif items:
+        elif items != False or items == 0:
             if isinstance(items[0], int) and isinstance(items[1], int): # if only one items is given
                 return self.root[items[0]].get(item=items[1]) # items is still a list, but with two integers, and no lists inside
             elif isinstance(items, (list, tuple)): # if multiple items are given
