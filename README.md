@@ -264,3 +264,56 @@ For multiple items, you need to use tuple in list again (or similar):
 items = your_table.get(items=[(1,2), (2,2)])
 ```
 
+
+
+### Adding rows and columns
+
+#### Adding rows:
+
+To add a row to your table, you have to call the 'add_row()' function:
+
+```python
+your_table.add_row()
+```
+
+This will add a row with default values to the last row of your table.
+
+To use a different value, you can use the 'val' parameter:
+
+```python
+your_table.add_row(val="Hello")
+```
+
+If you want your new row to be at the top, you can use the 'side' parameter:
+
+```python
+your_table.add_row(side="Top", val="Hello")
+```
+
+You can also place the row at a specific position (y-axis / between two rows) in your table, by using 'pos':
+
+```python
+your_table.add_row(pos=3, val="Hello")
+```
+
+To choose if the new row goes under or over the current third row, you can use the 'side' parameter (default value is "Top") again, relative to the column 'pos' is pointing to:
+
+```python
+your_table.add_row(pos=3, side="Bottom", val="Hello")
+```
+
+This will place the new row under the third row.
+
+And if you want more than one row added at the time, you can use the 'num' parameter:
+
+```python
+your_table.add_row(pos=3, side="Bottom", val="Hello", num=4)
+```
+
+This will add four new rows under the current third row, with "Hello" as value.
+
+
+
+#### Adding columns
+
+*coming soon!*
