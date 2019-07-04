@@ -296,13 +296,13 @@ You can also place the row at a specific position (y-axis / between two rows) in
 your_table.add_row(pos=3, val="Hello")
 ```
 
-To choose if the new row goes under or over the current third row, you can use the 'side' parameter (default value is "Top") again, relative to the column 'pos' is pointing to:
+To choose if the new row goes under or over the current third row, you can use the 'side' parameter again (default value is "Top"), relative to the row 'pos' is pointing to:
 
 ```python
 your_table.add_row(pos=3, side="Bottom", val="Hello")
 ```
 
-This will place the new row under the third row.
+This will place the new row under the current third row.
 
 And if you want more than one row added at the time, you can use the 'num' parameter:
 
