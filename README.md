@@ -209,3 +209,33 @@ data = your_table.get()
 ['Hello', 'Hello', 'Hello', 'Hello']]
 ```
 
+#### Get a specific row or column
+
+To get a specific row/column, you need to give the 'get()' function the 'row'/'column' argument:
+
+```python
+third_row = your_table.get(row=2) # returns the third row
+second_column = your_table.get(column=1) # returns the second column
+```
+
+You can also do this with multiple rows and columns:
+
+```python
+rows = your_table.get(row=(2,3)) # row 2,3
+columns = your_table.get(column=[1,3]) # column 1,3
+```
+
+#### Get specific item(s)
+
+If you need to get a specific item from an exact position, you need the 'items' parameter:
+
+```python
+item = your_table.get(items=(1,2)) # item from second column and third row
+```
+
+For multiple items, you need to use tuple in list again (or similar):
+
+```python
+items = your_table.get(items=[(1,2), (2,2)])
+```
+
