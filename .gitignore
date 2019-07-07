@@ -1,1 +1,5 @@
+# python directory
 __pycache__/
+
+# a script for testing the module faster
+testing.py
