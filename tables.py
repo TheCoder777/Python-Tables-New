@@ -215,3 +215,41 @@ class Table():
             for i in range(num):
                 self.root.append(row(len=self.columns, val=val))
             self.update()
+
+    def add_column(self, pos=None, side=None, val=default_val, num=1):
+        if pos != None:
+            if pos > self.columns:
+                print("Postion: '{}' is not in the table".format(pos))
+            else:
+                if side != None:
+                    if side in ["Left", "left", "L", "l"]:
+                        for i in range(num):
+                            for row in self.root:
+                                row.root.insert(pos, val)
+                        self.update()
+                    elif side in ["Right", "right", "R", "r"]:
+                        for i in range(num):
+                            for row in self.root:
+                                row.root.insert(pos +1, val)
+                        self.update()
+                else:
+                    for i in range(num):
+                        for row in self.root:
+                            row.root.insert(pos, val)
+                    self.update()
+        elif side != None:
+            if side in ["Left", "left", "L", "l"]:
+                for i in range(num):
+                    for row in self.root:
+                        row.root.insert(0, val)
+                self.update()
+            elif side in ["Right", "right", "R", "r"]:
+                for i in range(num):
+                    for row in self.root:
+                        row.root.append(val)
+                self.update()
+        else:
+            for i in range(num):
+                for row in self.root:
+                    row.root.append(val)
+            self.update()
