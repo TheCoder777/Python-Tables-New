@@ -204,10 +204,27 @@ your_table.insert(items=[[1,3], [2,4]], val="Hello!") # lists in list
 your_table.insert(items=([1,3], [2,4]), val="Hello!") # lists in tuple
 your_table.insert(items=[(1,3), (2,4)], val="Hello!") # tuples in list
 your_table.insert(items=((1,3), (2,4)), val="Hello!") # tuples in tuple
-
 ```
 
 Note that if you use the items list, you should use the 'val' variable to set the value.
+
+If you want to add different values at different positions, you need to give a list with all values to the 'val' parameter:
+
+```python
+your_table.insert(items=[[1,3], [2,4]], val=["Hello!", "World!"])
+```
+
+This will insert "Hello!" at position [1,3] and "World!" at position [2,4].
+
+Another way to do this is by using the x- and y- coordinates in different lists:
+
+```python
+y = [1,2] # all y values (rows)
+x = [3,4] # all x values (columns)
+your_table.insert(y, x, val=["Hello!", "World!"])
+```
+
+Don't worry if one list (x, y, val) is too short or too long. The 'insert()' function will automatically crop it or fill missing values with default values.
 
 
 
@@ -359,4 +376,3 @@ your_table.add_column(pos=3, side="Right", val="Hello", num=4)
 ```
 
 This will now add 3 columns at the right side of the current third column, instead of one.
-
