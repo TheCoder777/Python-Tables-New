@@ -329,6 +329,16 @@ your_table.add_row(pos=3, side="Bottom", val="Hello", num=4)
 
 This will add four new rows under the current third row, with "Hello" as value.
 
+If you don't want to use one value for the entire row, you can just give the 'val' parameter a list or a tuple of values:
+
+```python
+your_table.add_row(pos=3, side="Bottom", val=["Hello", "what's", "up?"])
+```
+
+This will fill the first three cells with the three values, and then fill up with default values.
+
+If the table has only a length of two, the function will crop the last value away! (The values are inserted from top to bottom!)
+
 
 
 #### Adding columns
@@ -376,3 +386,12 @@ your_table.add_column(pos=3, side="Right", val="Hello", num=4)
 ```
 
 This will now add 3 columns at the right side of the current third column, instead of one.
+
+If you need to use more values at a time, you can just give the 'val' parameter a list or a tuple of values:
+
+```python
+your_table.add_column(pos=3, side="Right", val=["Hello", "what's", "up?"])
+```
+
+Now this will fill the first three cells of the table with the three given values, and then fill the rest with default values. If the table has only a hight of two, it will crop the last value away automatically! (The values are inserted from left to right!)
+
