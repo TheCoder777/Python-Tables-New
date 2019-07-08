@@ -316,5 +316,47 @@ This will add four new rows under the current third row, with "Hello" as value.
 
 #### Adding columns
 
-*coming soon!*
+Adding a column is as simple as adding a row. Just call the 'add_column' function.
+
+```python
+your_table.add_column()
+```
+
+This will add a new column with default values at the right side of your table.
+
+If you want to use a different value, you can use the 'val' parameter:
+
+```python
+your_table.add_column(val="Hello")
+```
+
+To add the new column at the left of your table, you should use the 'side' parameter:
+
+```python
+your_table.add_column(side="Left", val="Hello")
+```
+
+You can also place the new column at a specific position (x-axis / between two columns) in your table, by using the 'pos' parameter as shown below.
+
+```python
+your_table.add_column(pos=3, val="Hello")
+```
+
+By default this will add the new column at the left side of the current third column.
+
+To change that, use the 'side' parameter again:
+
+```python
+your_table.add_column(pos=3, side="Right", val="Hello")
+```
+
+Now this will insert the new column at the right side of the current third column.
+
+If you want more than one column added at a time, the 'num' parameter will be your friend!
+
+```python
+your_table.add_column(pos=3, side="Right", val="Hello", num=4)
+```
+
+This will now add 3 columns at the right side of the current third column, instead of one.
 
