@@ -164,18 +164,63 @@ class Table():
             for row in self.root:
                 row.insert(col, val)
 
-    def insert(self, row=None, col=None, val=None, items=None):
-        if items != None and row == None and col == None:
-            if isinstance(items, (list, tuple)):
-                for i in items:
-                    if isinstance(i, (list, tuple)):
-                        self.root[i[0]].insert(i[1], val)
+    def insert(self, row=None, column=None, val=default_val, items=None):
+        if items != None and row == None and column == None:
+            if isinstance(items, (list, tuple)): # check if 'items' is a list
+                if isinstance(items[0], int) and isinstance(items[1], int): # if the position is given in the list/tuple directly
+                    self.root[items[0]].insert(items[1], val)
+                else:
+                    if isinstance(val, (list, tuple)):
+                        for v, i in zip(val, items):
+                            if isinstance(i, (list, tuple)):
+                                self.root[i[0]].insert(i[1], v)
+                            else:
+                                print("The position of an item must be provgided in a puple or in a list.")
                     else:
-                        print("The postition of an item must be provided in a tuple or in a list.")
+                        for i in items:
+                            if isinstance(i, (list, tuple)): # if there is a list/tuple in the 'items' list/tuple
+                                self.root[i[0]].insert(i[1], val)
+                            else:
+                                print("The postition of an item must be provided in a tuple or in a list.")
             else:
-                print("Multiple items must be provided in a tuple or in a list.")
+                print("Multiple items must be provided in a tuple or in a list, with the 'items' argument.")
+        elif row != None and column != None:
+            if isinstance(row, (list, tuple)) and isinstance(column, (list, tuple)): # row and column are given as lists
+                if len(row) > len(column):      # make row and column equal in length
+                    diff = len(row) - len(column)
+                    del row[diff:]
+                elif len(column) > len(row):    # make row and column equal in length
+                    diff = len(column) - len(row)
+                    del column[diff:]
+                # row and col should have an equal length now
+                if isinstance(val, (list, tuple)): # if 'val' is a list or tuple (multiple values)
+                    if len(val) != len(row) or len(val) != len(column): # if the amount of values is not equal to the lenght of given positions
+                        if len(val) > len(row): # make values equal to the length of positions
+                            diff = len(val) - len(row)
+                            del val[diff:]
+                        elif len(val) < len(row): # make values equal to the length of positions
+                            diff = len(row) - len(val)
+                            for i in range(diff):
+                                val.append(default_val)
+                        elif len(val) > len(column): # make values equal to the length of positions
+                            diff = len(val) - len(column)
+                            del val[diff:]
+                        elif len(val) < len(column): # make values equal to the length of positions
+                            diff = len(column) - len(val)
+                            for i in range(diff):
+                                val.append(default_val)
+                        ## no else, it has to be eqal now
+
+                    if len(val) == len(row) and len(val) == len(column):
+                        for v, r, c in zip(val, row, column): # zip to one list to iterate
+                            self.root[r].insert(c, v) # insert at given positions with given values
+                if not isinstance(val, (list, tuple)): # Value is anything, but not list/tuple. But row and column are still lists/tuples
+                    for r, c in zip(row, column): # zip to one list to iterate
+                        self.root[r].insert(c, val) # insert at given positions with (default) value
+            else:
+                self.root[row].insert(column, val) # default insert. Row and column are integers.
         else:
-            self.root[row].insert(col, val)
+            print("Insert() needs at least one positions to insert in the table.")
 
     def add_row(self, pos=None, side=None, val=default_val, num=1): # num stands for how many rows
                 ## add individual length to each row?
