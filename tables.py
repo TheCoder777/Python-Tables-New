@@ -187,14 +187,27 @@ class Table():
         else: # for singe row
             self.root[row].fill(val)
 
-    def fill_column(self, col, val):
+    def fill_column(self, col, val): # col is the position
         if isinstance(col, (list, tuple)): # if multiple columns are given
-            for c in col:
+            if isinstance(val, (list, tuple)): # if multiple columns and values given
+                if len(val) > self.columns:
+                    del val[self.columns:]
+                for c in col:
+                    for i in range(len(val)):
+                        self.root[i].insert(c, val[i])
+            else: # if multiple columns given, but only one value
+                for c in col:
+                    for row in self.root:
+                        row.insert(c, val)
+        else: # for singel column
+            if isinstance(val, (list, tuple)): # multiple values
+                if len(val) > self.columns:
+                    del val[self.columns:]
+                for i in range(len(val)):
+                    self.root[i].insert(col, val[i])
+            else: # singel values
                 for row in self.root:
-                    row.insert(c, val)
-        else: #  for singel column
-            for row in self.root:
-                row.insert(col, val)
+                    row.insert(col, val)
 
     def insert(self, row=None, column=None, val=default_val, items=None):
         if items != None and row == None and column == None:
