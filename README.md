@@ -68,7 +68,7 @@ If the installation part was successful and you got no errors on import, you are
 
 ### Reading and counting
 
-Note that in the whole module, you first start with the rows and continue with the rows!
+Note that in the whole module, you first start with the rows and continue with the columns!
 
 For example:
 
@@ -115,7 +115,7 @@ You can easily print your table just by "printing it as it is".
 print(your_table)
 ```
 
-This will print your table in a Human readable format like this:
+This will print your table in a more Human readable format like this:
 
 ```bash
 Empty; Empty; Empty; Empty; |
@@ -161,6 +161,14 @@ To fill your entire table with one value, you can use the 'fill()' function.
 your_table.fill("Hello")
 ```
 
+If you have want to fill the table with a list, the list will be applied to every row.
+
+```python
+your_table.fill(["Hello", "Hi"])
+```
+
+If the list is too long to fit the table, it will be cut away automatically.
+
 
 
 #### Insert values for rows/columns:
@@ -179,6 +187,14 @@ You can also fill multiple rows/columns at once:
 your_table.fill_row([1,2,3], "Hello") # fill rows 1, 2, 3
 
 your_table.fill_column([2,3,4], "Hi") # fill columns 2, 3, 4
+```
+
+The same applies if you have a list of values, independent of how many rows/columns you want to fill
+
+```python
+your_table.fill_row([1,2,3], ["Hello", "Hi"]) # fill rows 1, 2, 3
+
+your_table.fill_column(2, ["Hello", "Hi"]) # fill column 2
 ```
 
 
