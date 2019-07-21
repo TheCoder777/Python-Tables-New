@@ -57,9 +57,15 @@ class row():
             return True
 
     def fill(self, val):
-        for i in range(len(self.root)):
-            self.root[i] = val
-        return True
+        if isinstance(val, (list, tuple)):
+            if len(val) == len(self.root):
+                for i in range(len(self.root)):
+                    self.root[i] = val[i]
+                return True
+        else:
+            for i in range(len(self.root)):
+                self.root[i] = val
+            return True
 
     def get(self, item=None):
         if item != None:
@@ -161,6 +167,20 @@ class Table():
 
         else: # return entire table
             return self.__convert_to_list() # converts the entire table to one list and returns the list
+
+    def fill(self, val):
+        if isinstance(val, (list, tuple)):
+            if len(val) > self.columns:
+                del val[self.columns:]
+            elif len(val) < self.columns:
+                diff = self.columns - len(val)
+                for i in range(diff):
+                    val.append(default_val)
+            for row in self.root:
+                row.fill(val)
+        else:
+            for row in self.root:
+                row.fill(val)
 
     def fill_row(self, row, val): # if multiple rows are given
         if isinstance(row, (list, tuple)):
