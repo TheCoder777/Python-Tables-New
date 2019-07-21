@@ -182,10 +182,21 @@ class Table():
 
     def fill_row(self, row, val): # if multiple rows are given
         if isinstance(row, (list, tuple)):
-            for r in row:
-                self.root[r].fill(val)
+            if isinstance(val, (list, tuple)):
+                if len(val) > self.columns:
+                    del val[self.columns:]
+                for r in row:
+                    self.root[r].fill(val)
+            else:
+                for r in row:
+                    self.root[r].fill(val)
         else: # for singe row
-            self.root[row].fill(val)
+            if isinstance(val, (list, tuple)):
+                if len(val) > self.columns:
+                    del val[self.columns:]
+                self.root[row].fill(val)
+            else:
+                self.root[row].fill(val)
 
     def fill_column(self, col, val): # col is the position
         if isinstance(col, (list, tuple)): # if multiple columns are given
