@@ -58,10 +58,12 @@ class row():
 
     def fill(self, val):
         if isinstance(val, (list, tuple)):
-            if len(val) == len(self.root):
-                for i in range(len(self.root)):
+            if len(val) > len(self.root):
+                print("ERROR:\nThe Provided list of elements is too long to fit the table!")
+                return False
+            else:
+                for i in range(len(val)):
                     self.root[i] = val[i]
-                return True
         else:
             for i in range(len(self.root)):
                 self.root[i] = val
@@ -172,10 +174,6 @@ class Table():
         if isinstance(val, (list, tuple)):
             if len(val) > self.columns:
                 del val[self.columns:]
-            elif len(val) < self.columns:
-                diff = self.columns - len(val)
-                for i in range(diff):
-                    val.append(default_val)
             for row in self.root:
                 row.fill(val)
         else:
